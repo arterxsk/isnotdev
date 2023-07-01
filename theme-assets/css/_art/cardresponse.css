@@ -1,0 +1,33 @@
+.approved {
+	--bg-color: #fff;
+	--main-color: #007b4a;
+	--font-color: #007b4a;
+	color: var(--font-color);
+	background-color: var(--bg-color);
+	box-shadow: 1px 1px var(--main-color);
+	cursor: pointer;
+	font-size: 14px;
+	font-family: VT323;
+}
+.declined {
+	--bg-color: #fff;
+	--main-color: #C2352D;
+	--font-color: #C2352D;
+	color: var(--font-color);
+	background-color: var(--bg-color);
+	box-shadow: 1px 1px var(--main-color);
+	cursor: pointer;
+	font-size: 14px;
+	font-family: VT323;
+}
+.charges {
+	--bg-color: #fff;
+	--main-color: yellow;
+	--font-color: yellow;
+	color: var(--font-color);
+	background-color: var(--bg-color);
+	box-shadow: 1px 1px var(--main-color);
+	cursor: pointer;
+	font-size: 14px;
+	font-family: VT323;
+}

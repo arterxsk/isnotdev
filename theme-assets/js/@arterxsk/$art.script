@@ -1,0 +1,58 @@
+function enviar() {
+	var linha = $("#lista").val();
+	var linhaenviar = linha.split("\n");
+	var total = linhaenviar.length;
+	var ap = 0;
+	var ed = 0;
+	var rp = 0;
+	linhaenviar.forEach(function(value, index) {
+		setTimeout(
+			function() {
+				$.ajax({
+					url: '$skchecker.php?sk=' + value,
+					type: 'GET',
+					async: true,
+					success: function(resultado) {
+						if (resultado.match("LIVE")) {
+							removelinha();
+							ap++;
+							aprovadas(resultado + "");
+						} else if (resultado.match("DEAD")) {
+							removelinha();
+							rp++;
+							reprovadas(resultado + "");
+						}
+						$('#carregadas').html(total);
+						var fila = parseInt(ap) + parseInt(rp);
+						$('#cLive').html(ap);
+						$('#cWarn').html(ed);
+						$('#cDie').html(rp);
+						$('#total').html(fila);
+						$('#cLive2').html(ap);
+						$('#cWarn2').html(ed);
+						$('#cDie2').html(rp);
+					}
+				});
+			}, 2500 * index);
+	});
+}
+function aprovadas(str) {
+	$(".aprovadas").append(str + "<br>");
+}
+function reprovadas(str) {
+	$(".reprovadas").append(str + "<br>");
+}
+function removelinha() {
+	var lines = $("#lista").val().split('\n');
+	lines.splice(0, 1);
+	$("#lista").val(lines.join("\n"));
+}
+
+var myVar = setInterval(function() {
+		myTimer()}, 1000);
+	function myTimer() {
+		var dt = new Date();
+		document.getElementById("datetime").innerHTML = dt.toLocaleDateString();
+		var d = new Date();
+		document.getElementById("timenow").innerHTML = d.toLocaleTimeString();
+	}
