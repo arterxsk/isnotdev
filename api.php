@@ -11,8 +11,8 @@ $newDelay = $delay / 1000;
 sleep($newDelay);
 
 $amt = '10$';
-$owner = "<a href='t.me/isnotdevbot'>isnotbot</a>";
-$gateways = 'Sitebased Stripe CCN 10$';
+$owner = "<a href='t.me/isnotdevbot'>isnotdev</a>";
+$gateways = 'Stripe CCN 10$';
 
 ### FUNCTIONS
 if ($_SERVER['REQUEST_METHOD'] == "POST") {

