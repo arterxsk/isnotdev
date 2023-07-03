@@ -4,7 +4,7 @@
  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  <meta http-equiv="X-UA-Compatible" content="IE=edge">
  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
- <title>isnotdev</title>
+ <title>arterxsk</title>
  <link rel="shorcut icon" href="./p1ack_icon.png">
  <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700" rel="stylesheet">
  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -52,6 +52,7 @@
         </div>
         <select name="gate" id="gate" class="form-control" style="margin-bottom: 5px;">
          <option style="color:white" value="api.php">STRIPE CCN 10$</option>
+         <option style="color:white" value="intents.php">STRIPE 20$ (NOT MASABOL)</option>
         </select>
 
         <br>
@@ -143,7 +144,7 @@
                 </div>
                </div>
               </div>
-              <button type="button" style="margin-top: 10px" class="btn  btn-block" name="gerar" id="gerar">GENERATE</button>
+              <button type="button" style="margin-top: 10px" class="btn btn-block" name="gerar" id="gerar">GENERATE</button>
              </div>
             </form>
            </div>
@@ -172,7 +173,7 @@
      <div class="card">
       <div class="card-body">
        <div class="float-right">
-        <button type="show" class="btn btn-sm show-aprovadas"><i class="fa fa-eye-slash"></i></button>
+        <button type="show" class="btn btn-sm show-lives"><i class="fa fa-eye-slash"></i></button>
         <button class="btn btn-sm btn-copy1"><i class="fa fa-clipboard"></i></button>
        </div>
        <h4 class="card-title mb-1"><i class="fa fa-check" style="color: #060606"></i></i> LIVE CARD</h4>
@@ -200,7 +201,7 @@
 <script src="theme-assets/js/core/libraries/jquery.min.js" type="text/javascript"></script>
 <script src="theme-assets/js/scripts/generator.js" type="text/javascript"></script>
 
-<footer style="font-text: Monzane; weight: center;">
+<footer style="font-family: Monzane; weight: center;">
  <a href="http://t.me/arterxsk/">FULLY CUSTOMIZED BY: <p style="font-family: Morioka;">
   @isnotdev</a>
  </p>
@@ -211,12 +212,13 @@
   $("#form_generator").slideToggle("slow");
  }
 
+
  $(document).ready(function() {
 
   Swal.fire({
    imageUrl: 'https://cdn.discordapp.com/attachments/1090075657855324313/1111944321889992745/arterxsk.png',
    imageHeight: 90,
-   text: "You can only check 50 ccs at a time to avoid too much lagging.",
+   text: "You can only check 100 ccs at a time to avoid too much lagging.",
 
    confirmButtonColor: '#08469E',
 
@@ -306,9 +308,9 @@
    Swal.fire({
     title: 'COPIED CVV', icon: 'success', showConfirmButton: false, toast: true, position: 'top-end', timer: 3000
    });
-   var lista_live = document.getElementById('lista_cvvs').innerText;
+   var lista_live = document.getElementById('lista_aprovadas').innerText;
    var textarea = document.createElement("textarea");
-   textarea.value = lista_live;
+   textarea.value = lista_lives;
    document.body.appendChild(textarea);
    textarea.select();
    document.execCommand('copy'); document.body.removeChild(textarea);
@@ -361,34 +363,25 @@
    });
 
    /*
-         var line = array.filter(function(value){
-         return(value.trim() !== "");
-         });
-         */
+          var line = array.filter(function(value){
+          return(value.trim() !== "");
+          });
+          */
 
    var total = line.length;
 
 
    /*
-         line.forEach(function(value){
-         txt += value + '\n';
-         });
-         */
+          line.forEach(function(value){
+          txt += value + '\n';
+          });
+          */
 
    $('.form-checker').val(txt.trim());
    // ảo ma hả, đừng lấy code chứ !!
-   if (total > 50) {
+   if (total > 100) {
     Swal.fire({
-     title: '50 CC’S ONLY!', icon: 'warning', showConfirmButton: false, toast: true, position: 'top-end', timer: 3000
-    });
-    return false;
-   }
-
-   $('.form-gen').val(txt.trim());
-   // ảo ma hả, đừng lấy code chứ !!
-   if (total > 50) {
-    Swal.fire({
-     title: '50 CC’S ONLY!', icon: 'warning', showConfirmButton: false, toast: true, position: 'top-end', timer: 3000
+     title: '100 CC’S ONLY!', icon: 'warning', showConfirmButton: false, toast: true, position: 'top-end', timer: 3000
     });
     return false;
    }
