@@ -38,7 +38,7 @@ $mes = $separa[1];
 $ano = $separa[2];
 $cvv = $separa[3];
 $last4 = substr($cc, -4);
-$hidehit = "4242424242424242|$mes|$ano|$cvv";
+$hidehit = "XXXXXXXXXXXX$last4|$mes|$ano|$cvv";
 $bin = substr($cc, 0, 6);
 // XXXXXXXXXXXX$last4
 ### CARD TYPE
