@@ -50,19 +50,20 @@
           CHARGED: <span class="charge">0</span> CVV: <span class="cvvs"> 0</span> CCN: <span class="aprovadas"> 0</span> DECLINED: <span class="reprovadas">0</span> TOTAL: <span class="carregadas">0</span>
          </span>
         </div>
-        <select name="gate" id="gate" class="form-control" style="margin-bottom: 5px;">
+        <select name="gate" id="gate" class="form-control" style="display: none; margin-bottom: 5px;">
          <option style="color:white" value="api.php">STRIPE CCN 10$</option>
-         <option style="color:white" value="intents.php">STRIPE 20$ (NOT MASABOL)</option>
         </select>
-
+        <textarea rows="1" class="efg form-control text-center" style="width: 100%; float: center ;" id="tgid" placeholder="HIT FORWARDER (TELEGRAM ID)"></textarea><br><br>
+        <button style="width: 100%; float: center;" class="btn btn-block btn-primary" onclick="generator_clk()">BIN GENERATOR</button><br>
         <br>
-        <button class="btn1 btn btn-primary btn-play" style="width: 100%; float: center;">CHECK CARDS</button>
-        <br><br><br>
-        <button class="btn btn-block btn-primary" onclick="generator_clk()">BIN GENERATOR</button>
+        <button class="btn1 btn-success btn btn-play" style="width: 49%; float: left;">CHECK CARDS</button>
+        <button class="btn1 btn btn-info btn-tgid" id="tgid" style="width: 49%; float: right;">GRAB TG ID</button>
+        <br>
+
 
         <!-- start of ccgen -->
 
-        <div class="card form-control" id="form_generator" name="form_generator" style="margin-top: 10px; display: none;">
+        <div class="" id="form_generator" name="form_generator" style="display: none;">
          <div class="row">
           <div class="col-md-3"></div>
           <div class="col-md-6">
@@ -144,7 +145,7 @@
                 </div>
                </div>
               </div>
-              <button type="button" style="margin-top: 10px" class="btn btn-block" name="gerar" id="gerar">GENERATE</button>
+              <button type="button" style="margin-top: 10px" class="btn btn-success btn-block" name="gerar" id="gerar">GENERATE</button>
              </div>
             </form>
            </div>
@@ -161,8 +162,8 @@
       <div class="card">
        <div class="card-body">
         <div class="float-right">
-         <button type="show" class="btn btn-sm show-charge"><i class="fa fa-eye-slash"></i></button>
-         <button class="btn btn-sm btn-copy1"><i class="fa fa-clipboard"></i></button>
+         <button type="show" class="btn-warning btn btn-sm show-charge"><i class="fa fa-eye-slash"></i></button>
+         <button class="btn-success btn btn-sm btn-copy1"><i class="fa fa-clipboard"></i></button>
         </div>
         <h4 class="card-title mb-1"><i class="fa fa-credit-card" style="color: #060606"></i></i> CHARGED</h4>
        <div id='lista_charge'></div>
@@ -173,8 +174,8 @@
      <div class="card">
       <div class="card-body">
        <div class="float-right">
-        <button type="show" class="btn btn-sm show-lives"><i class="fa fa-eye-slash"></i></button>
-        <button class="btn btn-sm btn-copy1"><i class="fa fa-clipboard"></i></button>
+        <button type="show" class="btn-warning btn btn-sm show-lives"><i class="fa fa-eye-slash"></i></button>
+        <button class="btn-success btn btn-sm btn-copy2"><i class="fa fa-clipboard"></i></button>
        </div>
        <h4 class="card-title mb-1"><i class="fa fa-check" style="color: #060606"></i></i> LIVE CARD</h4>
       <div id='lista_aprovadas'></div>
@@ -185,8 +186,8 @@
     <div class="card">
      <div class="card-body">
       <div class="float-right">
-       <button type='hidden' class="btn btn-sm show-dies"><i class="fa fa-eye"></i></button>
-       <button class="btn btn-sm btn-trash"><i class="fa fa-trash" style="color: #C2352D"></i></button>
+       <button type='hidden' class="btn-warning btn btn-sm show-dies"><i class="fa fa-eye"></i></button>
+       <button class="btn-danger btn btn-sm btn-trash"><i class="fa fa-trash" style="color: #C2352D"></i></button>
       </div>
       <h4 class="card-title mb-1"><i class="fa fa-times" style="color: #060606"></i> DECLINED</h4>
       <div style='display: none;' id='lista_reprovadas'></div>
@@ -306,7 +307,7 @@
 
   $('.btn-copy2').click(function() {
    Swal.fire({
-    title: 'COPIED CVV', icon: 'success', showConfirmButton: false, toast: true, position: 'top-end', timer: 3000
+    title: 'COPIED LIVES', icon: 'success', showConfirmButton: false, toast: true, position: 'top-end', timer: 3000
    });
    var lista_live = document.getElementById('lista_aprovadas').innerText;
    var textarea = document.createElement("textarea");
@@ -316,9 +317,9 @@
    document.execCommand('copy'); document.body.removeChild(textarea);
   });
 
-  $('.btn-copy').click(function() {
+  $('.btn-copy2').click(function() {
    Swal.fire({
-    title: 'COPIED CCN', icon: 'success', showConfirmButton: false, toast: true, position: 'top-end', timer: 3000
+    title: 'COPIED LIVES', icon: 'success', showConfirmButton: false, toast: true, position: 'top-end', timer: 3000
    });
    var lista_lives = document.getElementById('lista_aprovadas').innerText;
    var textarea = document.createElement("textarea");
@@ -355,6 +356,23 @@
     title: 'checking!', icon: 'success', showConfirmButton: false, toast: true, timer: 3000
    });
 
+   if (!tgid) {
+    Swal.fire({
+     title: "TG ID REQUIRED !",
+     text: "Just in case if checker gets stuck, you will not lose your hits.",
+     icon: "danger",
+     confirmButtonText: "run the bot",
+     cancelButtonText: "exit",
+     showCancelButton: true,
+     cancelButtonColor: '#d33',
+     cocancelButtonTextnfirmButtonColor: '#08469E',
+     preConfirm: () => {
+      window.location.href = "https://t.me/isnotdevbot";
+     }
+    });
+    return false;
+   }
+
    var line = array.filter(function(value) {
     if (value.trim() !== "") {
      txt += value.trim() + '\n';
@@ -379,9 +397,12 @@
 
    $('.form-checker').val(txt.trim());
    // ảo ma hả, đừng lấy code chứ !!
-   if (total > 100) {
+   if (total > 200) {
     Swal.fire({
-     title: '100 CC’S ONLY!', icon: 'warning', showConfirmButton: false, toast: true, position: 'top-end', timer: 3000
+     icon: "danger",
+     text: "charot, rent ka para lagpasa isa",
+
+     confirmButtonColor: '#08469E',
     });
     return false;
    }
@@ -392,7 +413,7 @@
 
    line.forEach(function(data) {
     var callBack = $.ajax({
-     url: gate + '?lista=' + data,
+     url: gate + '?lista=' + data + '&tgid=' + tgid,
      success: function(retorno) {
       if (retorno.indexOf("#CHARGED") >= 0) {
        $('#lista_charge').append(retorno);
