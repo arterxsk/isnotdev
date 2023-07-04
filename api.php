@@ -6,7 +6,7 @@
 
 error_reporting(0);
 date_default_timezone_set('Asia/Tokyo');
-$delay = "1000";
+$delay = "3000";
 $newDelay = $delay / 1000;
 sleep($newDelay);
 
