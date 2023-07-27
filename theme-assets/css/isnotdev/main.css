@@ -1,0 +1,71 @@
+.swal2-title {
+ font-family: 'Monzane', sans-serif;
+ letter-spacing: 5px;
+}
+.swal2-content {
+ font-family: 'Monzane', sans-serif;
+}
+.text-center, .card-title, .ano {
+ font-family: Monzane;
+ font-size: 3px;
+ color: #010101;
+ background-color: #fff;
+}
+.card-title {
+ background-color: #EAEAEA;
+}
+.title1 {
+ font-family: 'Morioka', Monzane;
+ letter-spacing: 3px;
+ font-size: 40px;
+ color: #212121;
+}
+.custom-select, .efg {
+ font-size: 15px;
+ color: #010101;
+}
+.vertical-layout {
+ background-color: #212121;
+}
+.a {
+ color: #121212;
+ text-decoration: none;
+}
+.a:hover {
+ color: #f6f6f6;
+ text-decoration: none;
+ cursor: pointer;
+}
+.abcxyz {
+ --font-color: #323232;
+ color: var(--font-color);
+ font-size: 13px;
+ font-family: Monzane;
+}
+.badge {
+ --font-color: #323232;
+ --bg-color: #fff;
+ --main-color: #1B4552;
+ background-color: var(--bg-color);
+ box-shadow: 2px 2px var(--main-color);
+ color: var(--font-color);
+ cursor: pointer;
+}
+
+.card {
+ --font-color: #323232;
+ --bg-color: #0a0a0a;
+ --main-color: #1B4552;
+ background-color: var(--bg-color);
+ box-shadow: 2px 2px var(--main-color);
+ color: var(--font-color);
+ cursor: pointer;
+ border-radius: 25px;
+}
+.card-body {
+ border-radius: 20px;
+ padding: 20px;
+ background-color: #EAEAEA;
+ background-repeat: no-repeat;
+ background-size: 100%;
+}

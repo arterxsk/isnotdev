@@ -1,0 +1,88 @@
+.ips {
+ --bg-color: #fff;
+ --main-color: #119DA4;
+ --font-color: #119DA4;
+ color: var(--font-color);
+ background-color: var(--bg-color);
+ box-shadow: 1px 1px var(--main-color);
+ cursor: pointer;
+ font-size: 13px;
+ font-family: Monzane;
+}
+.approved {
+ --bg-color: #fff;
+ --main-color: #007b4a;
+ --font-color: #007b4a;
+ color: var(--font-color);
+ background-color: var(--bg-color);
+ box-shadow: 1px 1px var(--main-color);
+ cursor: pointer;
+ font-size: 13px;
+ font-family: Monzane;
+}
+.declined {
+ --bg-color: #fff;
+ --main-color: #C2352D;
+ --font-color: #C2352D;
+ color: var(--font-color);
+ background-color: var(--bg-color);
+ box-shadow: 1px 1px var(--main-color);
+ cursor: pointer;
+ font-size: 13px;
+ font-family: Monzane;
+}
+.charges {
+ --bg-color: #fff;
+ --main-color: #F5CB5C;
+ --font-color: #F5CB5C;
+ color: var(--font-color);
+ background-color: var(--bg-color);
+ box-shadow: 1px 1px var(--main-color);
+ cursor: pointer;
+ font-size: 13px;
+ font-family: Monzane;
+}
+.crds {
+ --bg-color: #fff;
+ --main-color: #5A6D98;
+ --font-color: #5A6D98;
+ color: var(--font-color);
+ background-color: var(--bg-color);
+ box-shadow: 1px 1px var(--main-color);
+ cursor: pointer;
+ font-size: 13px;
+ font-family: Monzane;
+}
+.msg {
+ --bg-color: #fff;
+ --main-color: #264653;
+ --font-color: #264653;
+ color: var(--font-color);
+ background-color: var(--bg-color);
+ box-shadow: 1px 1px var(--main-color);
+ cursor: pointer;
+ font-size: 13px;
+ font-family: Monzane;
+}
+.gatew {
+ --bg-color: #fff;
+ --main-color: #006B9B;
+ --font-color: #006B9B;
+ color: var(--font-color);
+ background-color: var(--bg-color);
+ box-shadow: 1px 1px var(--main-color);
+ cursor: pointer;
+ font-size: 13px;
+ font-family: Monzane;
+}
+.ownr {
+ --bg-color: #fff;
+ --main-color: #EB5E28;
+ --font-color: #EB5E28;
+ color: var(--font-color);
+ background-color: var(--bg-color);
+ box-shadow: 1px 1px var(--main-color);
+ cursor: pointer;
+ font-size: 13px;
+ font-family: Monzane;
+}
